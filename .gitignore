@@ -482,3 +482,6 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Stop tracking appsettings.json to persist local db key
+**/appsettings.json
