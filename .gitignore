@@ -485,3 +485,6 @@ $RECYCLE.BIN/
 
 # Stop tracking appsettings.json to persist local db key
 **/appsettings.json
+FluvioApp/Properties/serviceDependencies.json
+
+FluvioApp/Properties/serviceDependencies.local.json
