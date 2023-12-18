@@ -13,40 +13,64 @@
     </div>
 }
 
+@functions {
+    int GetColumnWidth(IEnumerable<FluvioApp.Models.Project> projects)
+    {
+        int projectCount = projects.Count();
+
+        if (projectCount == 1)
+        {
+            return 12; // Ocupă întregul rând pentru un singur proiect
+        }
+        else if (projectCount == 2)
+        {
+            return 6; // Împarte rândul în două pentru două proiecte
+        }
+        else
+        {
+            return 4; // Împarte rândul în trei pentru trei sau mai multe proiecte
+        }
+    }
+}
+
 @*
 @foreach (FluvioApp.Models.Project project in ViewBag.Projects)
 *@
-<div class = "projectsContainer card">
-    @foreach (FluvioApp.Models.Project project in ViewBag.Projects)
-    {
-        <div class="card projectCard mb-3">
+<div class="projectsContainer card">
+    <div class="d-flex flex-wrap justify-content-between">
+        @foreach (FluvioApp.Models.Project project in ViewBag.Projects)
+        {
+             <div class="col-md-@GetColumnWidth(ViewBag.Projects)">
+                <div class="card projectCard">
 
-            @Html.Partial("ProjectInfo", project)
+                    @Html.Partial("ProjectInfo", project)
 
-            <div class="card-text assignments">
+                    <div class="card-text assignments">
+                        @if (project.Assignments != null && project.Assignments.Any())
+                        {
+                            @foreach (var assignment in project.Assignments.Take(2))
+                            {
+                                <div class="assignment">
+                                    <p>@assignment.Description</p>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p>Nu s-a pus nici-un task la acest proiect</p>
+                        }
+                    </div>
 
-                @if (Model != null && Model.Assignments != null)
-                {
-                    @foreach (var assignment in Model.Assignments.Take(2))
-                    {
-                        <div class="assignment">
-                            <p>@assignment.TaskName</p>
-                        </div>
-                    }
-                }
-                else
-                {
-                    <p>Nu s-a pus nici-un task la acest proiect</p>
-                }
+                    <a class="btn btn-success" href="/Projects/Show/@project.Id">Afisare Proiect</a>
 
+                </div>
             </div>
-
-            <a class="btn btn-success" href="/Projects/Show/@project.Id">Afisare Proiect</a>
-
-        </div>
-    }
+        }
+    </div>
 </div>
 
+<br />
+<br />
 
 <br />
 <br />
