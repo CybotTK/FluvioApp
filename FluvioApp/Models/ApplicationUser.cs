@@ -8,6 +8,6 @@ namespace FluvioApp.Models
         public virtual ICollection<Project> Projects { get; set; }  
 
         //un user poate crea mai multe taskuri
-        public virtual ICollection<Task> Tasks { get; set; }
+        public virtual ICollection<Assignment> Assignments { get; set; }
     }
 }

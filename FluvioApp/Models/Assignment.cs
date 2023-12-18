@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FluvioApp.Models
 {
-    public class Task
+    public class Assignment
     {
         [Key]
         public int Id { get; set; }

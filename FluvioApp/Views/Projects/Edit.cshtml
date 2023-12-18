@@ -1,0 +1,39 @@
+﻿@model FluvioApp.Models.Project
+
+<h2 class="text-center mt-5">Editare Proiect</h2>
+<br />
+
+<div class="container mt-5">
+
+    <div class="row">
+
+        <div class="col-md-6 offset-3">
+
+            @using (Html.BeginForm(actionName: "Edit", controllerName:"Projects",
+                    method: FormMethod.Post,
+                    routeValues: new{id = Model.Id}))
+            {
+
+                @Html.Label("ProjectName", "Titlu Proiect")
+                <br />
+                @Html.EditorFor(m => m.ProjectName, new {htmlAttributes = new {@class = "form-control" }})
+                @Html.ValidationMessageFor(m => m.ProjectName, null, new { @class = "text-danger"})
+                <br /><br />
+
+                @Html.Label("ProjectDescription", "Descrierea Proiectului")
+                <br />
+                @Html.Editor("ProjectDescription", new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(m => m.ProjectDescription, null, new {@class="text-danger"})
+                <br /><br />
+                
+                @*probabil trebuie sa adaug si schimbarea echipei care sa lucreze la proiect*@
+
+                <button class="btn btn-sm btn-success" type="submit">Modifica proiectul</button>
+
+            }
+
+        </div>
+
+    </div>
+
+</div>

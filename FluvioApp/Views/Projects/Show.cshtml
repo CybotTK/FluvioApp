@@ -1,0 +1,97 @@
+﻿@model FluvioApp.Models.Project
+
+@*Afisarea unui proiect*@
+
+@if (TempData["message"] != null)
+{
+    <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5">
+        @ViewBag.Message
+    </div>
+}
+
+<br />
+
+<div class="card">
+
+    @Html.Partial("ProjectInfo", Model)
+
+    @*afisez butoane daca Id-ul userului care a accesat proiectul e acelasi
+        cu UserId
+        De facut
+    *@
+
+    <div class="card-text assignments">
+
+        @foreach (var assignment in @Model.Assignments)
+        {
+            <div class="assignment">
+
+                <p>@assignment.Title</p>
+                <p>@assignment.StartDate</p>
+
+            </div>
+
+            <a class="btn btn-success" href="/Projects/Show/@assignment.Id">Afisare Task</a>
+
+        }
+
+    </div>
+
+    <div class="d-flex flex-row justify-content-between">
+
+        <a class="btn btn-success" href="/Projects/Edit/@Model.Id">Editeaza proiectul</a>
+
+        <form method="post" action="/Projects/Delete/@Model.Id">
+
+            <button class="btn btn-danger" type="submit">Sterge proiectul</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+@*from unde sa adaug taskuri!!
+Formularul in care se poate adauga un task
+Momentan nu am facut controllerul pt taskuri*@
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+
+            <div class="card">
+
+                <form method="post" action="/Projects/Show/@Model.Id">
+
+                    <div class="card-body">
+
+                        <input type="hidden" name="ProjectId" value="@Model.Id" />
+
+                        <label>Continut task</label>
+                        <br />
+
+                        <textarea class="form-control" name="Description"></textarea>
+
+                        @Html.ValidationMessage("Description", null, new { @class = "text-danger" })
+
+                        <br /><br />
+
+                        <button class="btn btn-success " type="submit">Adauga taskul</button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-2"></div>
+
+    </div>
+
+</div>
