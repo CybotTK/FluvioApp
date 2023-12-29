@@ -1,5 +1,41 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model FluvioApp.Models.Assignment
+
 @{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Editare task</h2>
+<br />
+
+@using (Html.BeginForm(controllerName: "Assignments", actionName: "Edit",
+       method: FormMethod.Post, routeValues: new { id = Model.Id }))
+{
+    @Html.Label("Title", "Titlu task")
+    <br />
+
+    @Html.Label("Description", "Descriere task")
+    <br />
+    @Html.Editor("Description", new { @class = "form-control" })
+    <br />
+
+    <label>Status task</label>
+    <br />
+    <!-- Dropdown pentru status -->
+    <select class="form-control" name="Status">
+        @{
+            var statusValues = new List<int> { 1, 2 }; // Adaugă toate valorile posibile pentru status
+        }
+
+        @foreach (var value in statusValues)
+        {
+            <option value="@value" selected="@(Model.Status == value)">
+                @((value == 1) ? "În desfășurare" : "Finalizat")
+            </option>
+        }
+    </select>
+    @Html.ValidationMessage("Status", null, new { @class = "text-danger" })
+    <br />
+
+
+    <button class="btn btn-primary" type="submit">Editeaza taskul</button>
 }

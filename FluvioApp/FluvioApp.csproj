@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Assignments\Index.cshtml" />
+    <Content Remove="Views\Assignments\New.cshtml" />
+    <Content Remove="Views\Assignments\Show.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="appsettings.json" />
   </ItemGroup>
 

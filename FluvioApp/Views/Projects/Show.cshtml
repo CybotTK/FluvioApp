@@ -31,7 +31,7 @@
 
             </div>
 
-            <a class="btn btn-success" href="/Projects/Show/@assignment.Id">Afisare Task</a>
+            @*<a class="btn btn-success" href="/Projects/Show/@assignment.Id">Afisare Task</a>*@
 
         }
 
@@ -51,9 +51,61 @@
 
 </div>
 
+@*Afisare taskuri impreuna cu butoane de editare si stergere*@
+
+@foreach (var ass in Model.Assignments)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-8">
+
+                <div>
+
+                    <h3>@ass.Title</h3>
+
+                    <p>@ass.Description</p>
+                    <small>@ass.StartDate</small>
+                    @*Aici o sa pun si numele userului care o pus taskul*@
+
+                </div>
+
+                <br />
+
+                <div class="d-flex">
+
+                    <div>
+
+                        <a class="btn btn-outline-primary" href="/Assignments/Edit/@ass.Id"><i class="bi bi-pencil-square"></i>Editeaza</a>
+                    
+                    </div>
+
+                    <div>
+
+                        <form method="post" action="/Assignments/Delete/@ass.Id">
+
+                            <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i>Sterge</button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+                
+
+            </div>
+        
+            <div class="col-md-2"></div>
+
+        </div>
+
+    </div>
+
+}
+
 @*from unde sa adaug taskuri!!
-Formularul in care se poate adauga un task
-Momentan nu am facut controllerul pt taskuri*@
+Formularul in care se poate adauga un task*@
 
 <div class="container">
 
@@ -71,14 +123,31 @@ Momentan nu am facut controllerul pt taskuri*@
 
                         <input type="hidden" name="ProjectId" value="@Model.Id" />
 
+                        <label>Titlu task</label>
+                        <br />
+
+                        <textarea class="form-control" name="Title"></textarea>
+
+                        @*TREBUIE SCHIMBAT STATUSUL INTRUN DROPDOWN 
+                            E FACUT TEXTAREA PENTRU TESTARE
+                        *@
+
+                        <label>Status task</label>
+                        <br />
+
+                        <select class="form-control" name="Status">
+                            <option value="1">În desfășurare</option>
+                            <option value="2">Finalizat</option>
+                        </select>
+
+                        @Html.ValidationMessage("Status", null, new {@class="text-danger"})
+                        <br />
+
                         <label>Continut task</label>
                         <br />
 
                         <textarea class="form-control" name="Description"></textarea>
-
-                        @Html.ValidationMessage("Description", null, new { @class = "text-danger" })
-
-                        <br /><br />
+                        <br /> <br />
 
                         <button class="btn btn-success " type="submit">Adauga taskul</button>
 

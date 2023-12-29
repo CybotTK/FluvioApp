@@ -18,19 +18,18 @@ namespace FluvioApp.Models
         [Required(ErrorMessage = "Statusul trebuie completat")]
         public int Status { get; set; }
     
-        public DateTime StartDate { get; set; } = (DateTime)default(DateTime?);
+        public DateTime StartDate { get; set; }
 
         public DateTime? EndDate { get; set;}
 
         //Un task poate fi creat de un singur user
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
 
         //Un task trebuie sa apartina de un singur proiect
         public int ProjectId { get; set; }
 
         //Useri si roluri
         public virtual ApplicationUser? User { get; set; }
-
 
     }
 }

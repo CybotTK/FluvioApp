@@ -36,7 +36,7 @@ namespace FluvioApp.Controllers
         //[Authorize(Roles = "User,Admin")]
         public IActionResult Index()
         {
-            var projects = db.Projects;
+            var projects = db.Projects.Include("Assignments");
             ViewBag.Projects = projects;   
 
             return View();
@@ -53,6 +53,29 @@ namespace FluvioApp.Controllers
                               .First();
 
             return View(project);
+        }
+
+        //Adaugarea unui task asociat unui proiect in baza de date
+        [HttpPost]
+        public IActionResult Show([FromForm] Assignment assignment)
+        {
+            assignment.StartDate = DateTime.Now;
+
+            try
+            {
+                db.Assignments.Add(assignment);
+                db.SaveChanges();
+                return Redirect("/Projects/Show/" + assignment.ProjectId);
+            }
+            catch (Exception ex) 
+            {
+                Project project = db.Projects.Include("Assignments")
+                              .Where(proj => proj.Id == assignment.ProjectId)
+                              .First();
+
+                return View(project);
+            }
+
         }
 
         //Se afiseaza formularul
