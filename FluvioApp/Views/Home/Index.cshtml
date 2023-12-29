@@ -2,7 +2,95 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FluvioApp - Task Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Pun alte stiluri aici -->
+
+    <link rel="icon" href="~/wwwroot/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="~/wwwroot/favicon.ico" alt="FluvioApp Logo" style="height: 30px; width: auto;">
+            FluvioApp
+        </a>
+        
+        <!-- Buton pentru a activa meniul pe dispozitive mici -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <!-- Adaug alte chestii in meniu -->
+
+                <!-- Butonul pentru a naviga catre Projects/Index -->
+                <li class="nav-item">
+                    <button class="btn btn-primary" onclick="redirectToProjects()">Vezi Proiecte</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1>Bine ați venit la FluvioApp!</h1>
+        <p>Pentru a începe, vă rugăm să vă autentificați sau să vă creați un cont.</p>
+
+        <div class="mt-4">
+            <h3>Ce poți face cu FluvioApp?</h3>
+            <ul>
+                <li>Organizează-ți sarcinile zilnice, săptămânale și lunare.</li>
+                <li>Setează priorități pentru fiecare sarcină.</li>
+                <li>Asignează sarcini altor membri ai echipei tale.</li>
+                <li>Urmărește progresul sarcinilor într-un mod intuitiv.</li>
+            </ul>
+        </div>
+
+        <!-- Intrebare cu raspuns dinamic -->
+        <div class="mt-4">
+            <h3>Cui i se potrivește această aplicație?</h3>
+            <p class="lead">FluvioApp este creată pentru cei care aspiră la <strong>eficiență</strong>, <strong>organizare</strong>, și <strong>succes</strong>.</p>
+            <p class="lead">Indiferent dacă ești</p>
+            <p id="targetAudience">Manageri</p>
+        </div>
+    </div>
+
+    <script>
+        function redirectToProjects() {
+            // Redirecționează către Projects/Index
+            window.location.href = '/Projects/Index';
+        }
+
+        // Functie pentru a schimba dinamic textul cu efect de fading
+        function changeTargetAudience() {
+            var targetAudienceElement = document.getElementById("targetAudience");
+            var targetAudiences = ["Manageri", "Studenți", "Corporații"];
+            var currentIndex = targetAudiences.indexOf(targetAudienceElement.innerText);
+
+            // Schimbă la următorul element din lista
+            var nextIndex = (currentIndex + 1) % targetAudiences.length;
+
+            // Adaugă efect de fading
+            targetAudienceElement.style.opacity = 0;
+
+            // Schimbă textul și revine la opacitatea normală
+            setTimeout(function () {
+                targetAudienceElement.innerText = targetAudiences[nextIndex];
+                targetAudienceElement.style.opacity = 1;
+            }, 500); 
+        }
+
+        // se schimba automat o dată pe secundă 
+        setInterval(changeTargetAudience, 1000);
+    </script>
+
+    <!-- Scripturi Bootstrap (jQuery și Popper.js) -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>
