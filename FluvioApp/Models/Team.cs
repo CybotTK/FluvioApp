@@ -4,12 +4,12 @@ namespace FluvioApp.Models
 {
     public class Team
     { 
-        [Key]
+        [Key]   
         public int Id { get; set; }
 
-        public string TeamName { get; set; }
+        public string? TeamName { get; set; }
 
-        //o echipa poate lucra la mai multe proiecte
-        public virtual ICollection<Project> Projects { get; set; }
+        // O echipa are mai multi TeamMembers
+        public virtual ICollection<TeamMember>? TeamMembers { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace FluvioApp.Models
 
         public DateTime? EndDate { get; set;}
 
-        //Un task poate fi creat de un singur user
+        // Un task poate fi creat de un singur user
         public string? UserId { get; set; }
 
         //Un task trebuie sa apartina de un singur proiect
@@ -30,6 +30,12 @@ namespace FluvioApp.Models
 
         //Useri si roluri
         public virtual ApplicationUser? User { get; set; }
+
+        // Un task poate avea mai multe comentarii
+        public virtual ICollection<Comment>? Comments { get; set; }
+
+        // Un task poate avea mai multe mediafiles assigned
+        public virtual ICollection<MediaFile>? MediaFiles { get; set; }
 
     }
 }
