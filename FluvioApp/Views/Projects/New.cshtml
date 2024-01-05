@@ -28,9 +28,11 @@
 
                 @Html.ValidationMessage("ProjectDescription", null, new {@class = "text-danger"})
                 <br /><br />
-
-                <button class="btn btn-success" type="submit">Adauga Proiect</button>
-
+                <div class="flex">
+                    <button class="btn btn-success" type="submit">Adauga Proiect</button>
+                
+                    <a class="btn btn-success" href="/Projects/Index">Inapoi la afisarea proiectelor</a>
+                </div>
             }
 
         </div>
