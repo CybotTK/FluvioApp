@@ -67,7 +67,7 @@ namespace FluvioApp.Controllers
                 db.SaveChanges();
                 return Redirect("/Projects/Show/" + assignment.ProjectId);
             }
-            catch (Exception ex) 
+            catch (Exception e) 
             {
                 Project project = db.Projects.Include("Assignments")
                               .Where(proj => proj.Id == assignment.ProjectId)
@@ -91,17 +91,15 @@ namespace FluvioApp.Controllers
         [HttpPost]
         public IActionResult New(Project project)
         {
-            try
+
+            if (ModelState.IsValid)
             {
-                if (project.Assignments == null)
-                {
-                    project.Assignments = new List<Assignment>();
-                }
+                project.Assignments = new List<Assignment>();
                 db.Projects.Add(project);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch (Exception)
+            else 
             {
                 return View("New");
             }
@@ -119,7 +117,7 @@ namespace FluvioApp.Controllers
         [HttpPost]
         public IActionResult Edit(int id, Project requestProject) 
         {
-            Project project=db.Projects.Find(id);
+            Project project = db.Projects.Find(id);
 
             if (ModelState.IsValid)
             {
