@@ -56,6 +56,7 @@ namespace FluvioApp.Controllers
         }
 
         //Adaugarea unui task asociat unui proiect in baza de date
+        // NU CRED CA MAI AM NEVOIE
         [HttpPost]
         public IActionResult Show([FromForm] Assignment assignment)
         {
@@ -77,7 +78,7 @@ namespace FluvioApp.Controllers
             }
 
         }
-
+        
         //Se afiseaza formularul
         //in care se va completa datele unui proiect
         public IActionResult New()
