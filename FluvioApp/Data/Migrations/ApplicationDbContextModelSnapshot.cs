@@ -127,6 +127,66 @@ namespace FluvioApp.Data.Migrations
                     b.ToTable("Assignments");
                 });
 
+            modelBuilder.Entity("FluvioApp.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AssignmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TaskId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssignmentId");
+
+                    b.ToTable("Comment");
+                });
+
+            modelBuilder.Entity("FluvioApp.Models.MediaFile", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("AssignmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Link")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TaskId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssignmentId");
+
+                    b.ToTable("MediaFile");
+                });
+
             modelBuilder.Entity("FluvioApp.Models.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -157,8 +217,6 @@ namespace FluvioApp.Data.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("TeamId");
-
                     b.ToTable("Projects");
                 });
 
@@ -171,12 +229,36 @@ namespace FluvioApp.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("TeamName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("FluvioApp.Models.TeamMember", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TeamId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("TeamMember");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -331,14 +413,31 @@ namespace FluvioApp.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("FluvioApp.Models.Comment", b =>
+                {
+                    b.HasOne("FluvioApp.Models.Assignment", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("AssignmentId");
+                });
+
+            modelBuilder.Entity("FluvioApp.Models.MediaFile", b =>
+                {
+                    b.HasOne("FluvioApp.Models.Assignment", null)
+                        .WithMany("MediaFiles")
+                        .HasForeignKey("AssignmentId");
+                });
+
             modelBuilder.Entity("FluvioApp.Models.Project", b =>
                 {
                     b.HasOne("FluvioApp.Models.ApplicationUser", null)
                         .WithMany("Projects")
                         .HasForeignKey("ApplicationUserId");
+                });
 
+            modelBuilder.Entity("FluvioApp.Models.TeamMember", b =>
+                {
                     b.HasOne("FluvioApp.Models.Team", null)
-                        .WithMany("Projects")
+                        .WithMany("TeamMembers")
                         .HasForeignKey("TeamId");
                 });
 
@@ -400,6 +499,13 @@ namespace FluvioApp.Data.Migrations
                     b.Navigation("Projects");
                 });
 
+            modelBuilder.Entity("FluvioApp.Models.Assignment", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("MediaFiles");
+                });
+
             modelBuilder.Entity("FluvioApp.Models.Project", b =>
                 {
                     b.Navigation("Assignments");
@@ -407,7 +513,7 @@ namespace FluvioApp.Data.Migrations
 
             modelBuilder.Entity("FluvioApp.Models.Team", b =>
                 {
-                    b.Navigation("Projects");
+                    b.Navigation("TeamMembers");
                 });
 #pragma warning restore 612, 618
         }
