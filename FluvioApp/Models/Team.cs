@@ -1,7 +1,10 @@
-﻿namespace FluvioApp.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FluvioApp.Models
 {
     public class Team
-    {
+    { 
+        [Key]
         public int Id { get; set; }
 
         public string TeamName { get; set; }
