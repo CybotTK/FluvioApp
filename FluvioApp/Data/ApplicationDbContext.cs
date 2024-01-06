@@ -14,6 +14,13 @@ namespace FluvioApp.Data
         }
 
         public DbSet<Project> Projects { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<MediaFile> MediaFiles { get; set; }
+
+        public DbSet<TeamMember> TeamMembers { get; set; }
+
         public DbSet<Assignment> Assignments { get; set; }
         public DbSet<Team> Teams { get; set; }
     }
