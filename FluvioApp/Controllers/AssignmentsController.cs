@@ -1,5 +1,7 @@
 ﻿using FluvioApp.Data;
 using FluvioApp.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FluvioApp.Controllers
@@ -49,7 +51,7 @@ namespace FluvioApp.Controllers
 
             if (ModelState.IsValid)
             {
-                ass.Status=requestAssignment.Status;
+                ass.Status = requestAssignment.Status;
                 ass.Title = requestAssignment.Title;
                 ass.Description = requestAssignment.Description;
 
@@ -63,5 +65,26 @@ namespace FluvioApp.Controllers
             }
         }
 
+
+        [HttpPost]
+        // [Authorize(Roles = "User,Editor,Admin")]
+        public IActionResult Edit([FromForm] Comment comment)
+        {
+            comment.Date = DateTime.Now;
+            // comment.UserId = _userManager.GetUserId(User);
+
+            if (ModelState.IsValid)
+            {
+                db.Comments.Add(comment);
+                db.SaveChanges();
+                return Redirect("/Assignment/Edit/" + comment.AssignmentId);
+            }
+
+            else
+            {
+                // SetAccessRights
+                return View();
+            }
+        }
     }
 }
