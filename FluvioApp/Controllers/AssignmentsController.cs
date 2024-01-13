@@ -61,6 +61,22 @@ namespace FluvioApp.Controllers
             }
         }
 
+        [Authorize(Roles = "User")]
+        public IActionResult View(int id)
+        {
+            Assignment ass = db.Assignments.Include("Comments").Include("User")
+                              .Where(ass => ass.Id == id)
+                              .First();
+
+            if (ass.UserId == _userManager.GetUserId(User))
+                return View(ass);
+            else
+            {
+                TempData["messageType"] = "alert-danger";
+                return RedirectToAction("Index");
+            }
+        }
+
         [HttpPost]
         [Authorize(Roles = "User")]
         public IActionResult Edit(int id, Assignment requestAssignment)
