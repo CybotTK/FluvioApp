@@ -67,7 +67,7 @@
 
                     <p>@ass.Description</p>
                     <small>@ass.StartDate</small>
-                    @*Aici o sa pun si numele userului care o pus taskul*@
+                    <small>@ass.User.UserName</small>@*Aici o sa pun si numele userului care o pus taskul*@
 
                 </div>
 
@@ -138,6 +138,7 @@ Formularul in care se poate adauga un task*@
                         <select class="form-control" name="Status">
                             <option value="1">În desfășurare</option>
                             <option value="2">Finalizat</option>
+                            <option value="3">Neinceput</option>
                         </select>
 
                         @Html.ValidationMessage("Status", null, new {@class="text-danger"})

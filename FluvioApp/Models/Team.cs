@@ -16,6 +16,6 @@ namespace FluvioApp.Models
         // O echipa are mai multi TeamMembers
         public virtual ICollection<TeamMember>? TeamMembers { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
+        public virtual ApplicationUser? User { get; set; }
     }
 }

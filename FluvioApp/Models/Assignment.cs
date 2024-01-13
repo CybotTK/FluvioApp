@@ -31,7 +31,7 @@ namespace FluvioApp.Models
         public virtual Project? Project { get; set; }   
 
         //Useri si roluri
-        public virtual ApplicationUser User { get; set; }
+        public virtual ApplicationUser? User { get; set; }
 
         // Un task poate avea mai multe comentarii
         public virtual ICollection<Comment>? Comments { get; set; }

@@ -72,14 +72,14 @@
             <select class="form-control" name="SelectedUserIds" multiple>
                 @foreach (var user in ViewBag.AllUsers)
                 {
-                    <option value="@user.UserId">@user.UserName</option>
+                    <option value="@user.Id">@user.UserName</option>
                 }
             </select>
             
             <br />
             
             <br />
-
+            @*
             <label>Atribuie Task-uri</label>
             <select class="form-control" name="SelectedTask">
                 @foreach (var task in ViewBag.AllTasks)
@@ -87,7 +87,7 @@
                     <option value="@task.Id">@task.Title</option>
                 }
             </select>
-
+            *@
             <br />
             
             <!-- Adauga un camp temporar pentru numele echipei -->

@@ -16,6 +16,6 @@ namespace FluvioApp.Models
         [Required(ErrorMessage = "Fiecare resursa necesita un link")]
         public string Link { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
+        public virtual ApplicationUser? User { get; set; }
     }
 }

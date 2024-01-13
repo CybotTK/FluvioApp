@@ -20,6 +20,6 @@ namespace FluvioApp.Models
         // Retinem timestamp la care a fost creat comentariul
         public DateTime Date { get; set; } = (DateTime)default(DateTime?);
 
-        public virtual ApplicationUser User { get; set; }
+        public virtual ApplicationUser? User { get; set; }
     }
 }

@@ -54,6 +54,16 @@ namespace FluvioApp.Models
                         Email = "user@test.com",
                         NormalizedUserName = "USER@TEST.COM",
                         PasswordHash = hasher.HashPassword(null, "User1!")
+                    },
+                    new ApplicationUser
+                    {
+                        Id = "8e445865-a24d-4543-a6c6-9443d048cdb3", // primary key
+                        UserName = "user2@test.com",
+                        EmailConfirmed = true,
+                        NormalizedEmail = "USER2@TEST.COM",
+                        Email = "user2@test.com",
+                        NormalizedUserName = "USER2@TEST.COM",
+                        PasswordHash = hasher.HashPassword(null, "User2!")
                     }
                 );
 
@@ -68,6 +78,11 @@ namespace FluvioApp.Models
                     {
                         RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7212",
                         UserId = "8e445865-a24d-4543-a6c6-9443d048cdb2"
+                    },
+                    new IdentityUserRole<string>
+                    {
+                        RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7212",
+                        UserId = "8e445865-a24d-4543-a6c6-9443d048cdb3"
                     }
                 );
 

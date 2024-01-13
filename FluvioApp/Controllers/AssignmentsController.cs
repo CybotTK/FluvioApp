@@ -22,23 +22,44 @@ namespace FluvioApp.Controllers
             _roleManager = roleManager;
         }
 
+        [Authorize(Roles ="User")]
         public IActionResult Delete(int id)
         {
             Assignment ass = db.Assignments.Find(id);
-            db.Assignments.Remove(ass);
-            db.SaveChanges();
 
-            return Redirect("/Projects/Show/" + ass.ProjectId);
+            if (ass.UserId == _userManager.GetUserId(User))
+            {
+                db.Assignments.Remove(ass);
+                db.SaveChanges();
+
+                return Redirect("/Projects/Show/" + ass.ProjectId);
+            }
+            else
+            {
+                TempData["message"] = "Nu aveti dreptul sa faceti modificari asupra unui articol care nu va apartine";
+                TempData["messageType"] = "alert-danger";
+                return RedirectToAction("Index");
+            }
         }
 
+        [Authorize(Roles = "User")]
         public IActionResult Edit(int id)
         {
+
             Assignment ass = db.Assignments.Find(id);
 
-            return View(ass);
+            if (ass.UserId == _userManager.GetUserId(User))
+                return View(ass);
+            else
+            {
+                TempData["message"] = "Nu aveti dreptul sa faceti modificari asupra unui articol care nu va apartine";
+                TempData["messageType"] = "alert-danger";
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
+        [Authorize(Roles = "User")]
         public IActionResult Edit(int id, Assignment requestAssignment)
         {
             Assignment ass = db.Assignments.Find(id);
@@ -57,12 +78,13 @@ namespace FluvioApp.Controllers
             {
                 return View(requestAssignment);
             }
+
         }
 
-
+        /*
         [HttpPost]
-        // [Authorize(Roles = "User,Editor,Admin")]
-        public IActionResult Edit([FromForm] Comment comment)
+        [Authorize(Roles = "User")]
+        public IActionResult EditComment([FromForm] Comment comment)
         {
             comment.Date = DateTime.Now;
             // comment.UserId = _userManager.GetUserId(User);
@@ -76,9 +98,10 @@ namespace FluvioApp.Controllers
 
             else
             {
-                // SetAccessRights
+                
                 return View();
             }
         }
+        */
     }
 }

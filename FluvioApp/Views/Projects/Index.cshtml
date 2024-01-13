@@ -1,6 +1,12 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
+
+@if (TempData.ContainsKey("message"))
+{
+    <h1>@ViewBag.message</h1>
+}
+
 <br/>
 
 <h2 class="text-center">Afisare Proiecte</h2>
