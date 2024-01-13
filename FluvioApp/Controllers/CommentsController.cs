@@ -9,11 +9,19 @@ namespace FluvioApp.Controllers
     public class CommentsController : Controller
     {
         private readonly ApplicationDbContext db;
-
-        public CommentsController(ApplicationDbContext contenxt)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public CommentsController(
+            ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager
+            )
         {
-            db = contenxt;
+            db = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
+
         public IActionResult New(Comment comm)
         {
             return View();

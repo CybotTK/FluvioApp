@@ -14,12 +14,12 @@ namespace FluvioApp.Models
         // User care a lasat comentariul
         public string? UserId { get; set; }
 
-        public virtual ApplicationUser? User { get; set; }
-
         [Required(ErrorMessage = "Comentariul nu poate fi gol")]
         public string Content { get; set; }
 
         // Retinem timestamp la care a fost creat comentariul
         public DateTime Date { get; set; } = (DateTime)default(DateTime?);
+
+        public virtual ApplicationUser User { get; set; }
     }
 }

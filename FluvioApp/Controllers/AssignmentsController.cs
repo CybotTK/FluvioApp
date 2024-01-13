@@ -9,9 +9,9 @@ namespace FluvioApp.Controllers
     public class AssignmentsController : Controller
     {
         private readonly ApplicationDbContext db;
-        /*private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public ProjectsController(
+        public AssignmentsController(
             ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager
@@ -20,12 +20,6 @@ namespace FluvioApp.Controllers
             db = context;
             _userManager = userManager;
             _roleManager = roleManager;
-        }*/
-        public AssignmentsController(
-            ApplicationDbContext context
-            )
-        {
-            db = context;
         }
 
         public IActionResult Delete(int id)

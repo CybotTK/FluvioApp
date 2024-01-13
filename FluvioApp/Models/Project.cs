@@ -22,8 +22,12 @@ namespace FluvioApp.Models
         //la un proiect pot avea o singura echipa
         public int? TeamId { get; set; }
 
+        public virtual Team? Team { get; set; }
+
         //Fac o colectie de tip Assignment(Task)
         //pentru a afisa taskurile din proiect
         public virtual ICollection<Assignment>? Assignments { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
     }
 }
