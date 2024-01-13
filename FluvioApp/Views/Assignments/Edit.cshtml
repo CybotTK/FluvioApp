@@ -12,7 +12,9 @@
 {
     @Html.Label("Title", "Titlu task")
     <br />
-
+    @Html.Editor("Title", new { @class = "form-control" })
+    <br /
+    >
     @Html.Label("Description", "Descriere task")
     <br />
     @Html.Editor("Description", new { @class = "form-control" })
@@ -29,7 +31,18 @@
         @foreach (var value in statusValues)
         {
             <option value="@value" selected="@(Model.Status == value)">
-                @((value == 1) ? "În desfășurare" : "Finalizat")
+                @if (value == 1)
+                {
+                    <text>În desfășurare</text>
+                }
+                else if (value == 2)
+                {
+                    <text>Finalizat</text>
+                }
+                else if (value == 3)
+                {
+                    <text>Neinceput</text>
+                }
             </option>
         }
     </select>

@@ -28,6 +28,6 @@ namespace FluvioApp.Models
         //pentru a afisa taskurile din proiect
         public virtual ICollection<Assignment>? Assignments { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
+        public virtual ApplicationUser? User { get; set; }
     }
 }

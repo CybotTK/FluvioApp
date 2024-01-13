@@ -49,12 +49,27 @@ namespace FluvioApp.Controllers
 
         //Adaugarea unui task asociat unui proiect in baza de date
         [HttpPost]
+        [Authorize(Roles = "User,Admin")]
         public IActionResult Show([FromForm] Assignment assignment)
         {
             assignment.StartDate = DateTime.Now;
 
             try
             {
+
+                Project project = db.Projects.Include(p => p.Assignments)
+                                             .Where(p => p.Id == assignment.ProjectId && p.UserId == _userManager.GetUserId(User))
+                                             .First();
+
+                if (project == null)
+                {
+                    TempData["message"] = "Nu aveti dreptul sa faceti modificari asupra unui articol care nu va apartine";
+                    TempData["messageType"] = "alert-danger";
+                    return Redirect("/Projects/Show/" + assignment.ProjectId);
+                }
+
+                assignment.UserId = project.UserId;
+
                 db.Assignments.Add(assignment);
                 db.SaveChanges();
                 return Redirect("/Projects/Show/" + assignment.ProjectId);
@@ -197,6 +212,7 @@ namespace FluvioApp.Controllers
                     project.ProjectName = requestProject.ProjectName;
                     project.ProjectDescription = requestProject.ProjectDescription;
                     TempData["message"] = "s-au produs modificarile";
+                    TempData["messageType"] = "alert-success";
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -216,12 +232,12 @@ namespace FluvioApp.Controllers
 
         //Se sterge proiectul din baza de date
         [HttpPost]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User,Admin")]
         public IActionResult Delete(int id) 
         {
             Project project = db.Projects.Find(id);
 
-            if (project.UserId == _userManager.GetUserId(User))
+            if (project.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
             {
                 db.Projects.Remove(project);
                 db.SaveChanges();

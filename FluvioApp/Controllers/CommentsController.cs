@@ -34,7 +34,6 @@ namespace FluvioApp.Controllers
         {
             Comment comm = db.Comments.Find(id);
 
-            /*
             if (comm.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
             {
                 db.Comments.Remove(comm);
@@ -48,18 +47,18 @@ namespace FluvioApp.Controllers
                 TempData["messageType"] = "alert-danger";
                 return RedirectToAction("Show", "Projects");
             }
-            */
+            
 
             return Redirect("/Assignment/Edit/" + comm.AssignmentId);
         }
 
-        // [Authorize(Roles = "User,Editor,Admin")]
+        [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult Edit(int id)
         {
            
             Comment comm = db.Comments.Find(id);
 
-           /*
+           
            if (comm.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
            {
                return View(comm);
@@ -71,7 +70,7 @@ namespace FluvioApp.Controllers
                TempData["messageType"] = "alert-danger";
                return RedirectToAction("Show", "Projects");
            }
-           */
+           
 
             return View(comm);
         }
@@ -82,8 +81,8 @@ namespace FluvioApp.Controllers
         {
             Comment comm = db.Comments.Find(id);
 
-            // if (comm.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
-            // {
+            if (comm.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
+            {
                 if (ModelState.IsValid)
                 {
                     comm.Content = requestComment.Content;
@@ -94,7 +93,7 @@ namespace FluvioApp.Controllers
                 {
                     return View(requestComment);
                 }
-            /*
+            
             }
             else
             {
@@ -102,7 +101,7 @@ namespace FluvioApp.Controllers
                 TempData["messageType"] = "alert-danger";
                 return RedirectToAction("Show", "Projects");
             }
-            */
+            
         }
     }
 }
