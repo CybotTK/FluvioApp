@@ -3,6 +3,7 @@ using FluvioApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FluvioApp.Controllers
 {
@@ -45,11 +46,13 @@ namespace FluvioApp.Controllers
         [Authorize(Roles = "User")]
         public IActionResult Edit(int id)
         {
-
-            Assignment ass = db.Assignments.Find(id);
+            Assignment ass = db.Assignments.Include("Comments").Include("User")
+                              .Where(ass => ass.Id == id)
+                              .First();
 
             if (ass.UserId == _userManager.GetUserId(User))
                 return View(ass);
+
             else
             {
                 TempData["message"] = "Nu aveti dreptul sa faceti modificari asupra unui articol care nu va apartine";
@@ -62,7 +65,11 @@ namespace FluvioApp.Controllers
         [Authorize(Roles = "User")]
         public IActionResult Edit(int id, Assignment requestAssignment)
         {
-            Assignment ass = db.Assignments.Find(id);
+            Assignment ass = db.Assignments.Include("User")
+                                           .Include("Comments")
+                                           .Include("Comments.User")
+                                           .Where(ass => ass.Id == id)
+                                           .First();
 
             if (ModelState.IsValid)
             {
@@ -84,7 +91,7 @@ namespace FluvioApp.Controllers
         /*
         [HttpPost]
         [Authorize(Roles = "User")]
-        public IActionResult EditComment([FromForm] Comment comment)
+        public IActionResult AddComment([FromForm] Comment comment)
         {
             comment.Date = DateTime.Now;
             // comment.UserId = _userManager.GetUserId(User);
