@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Content Remove="Views\Assignments\Index.cshtml" />
-    <Content Remove="Views\Assignments\Show.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

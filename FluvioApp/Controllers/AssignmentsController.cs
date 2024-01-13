@@ -3,6 +3,7 @@ using FluvioApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FluvioApp.Controllers
 {
@@ -59,9 +60,9 @@ namespace FluvioApp.Controllers
         }
 
         [Authorize(Roles = "User")]
-        public IActionResult View(int id)
+        public IActionResult Show(int id)
         {
-            Assignment ass = db.Assignments.Include("Comments").Include("User")
+            Assignment ass = db.Assignments.Include("Comments").Include("User").Include("Comments.User")
                               .Where(ass => ass.Id == id)
                               .First();
 
@@ -97,27 +98,26 @@ namespace FluvioApp.Controllers
 
         }
 
-        /*
+        
         [HttpPost]
         [Authorize(Roles = "User")]
-        public IActionResult EditComment([FromForm] Comment comment)
+        public IActionResult Show([FromForm] Comment comment)
         {
             comment.Date = DateTime.Now;
-            // comment.UserId = _userManager.GetUserId(User);
+            comment.UserId = _userManager.GetUserId(User);
 
             if (ModelState.IsValid)
             {
                 db.Comments.Add(comment);
                 db.SaveChanges();
-                return Redirect("/Assignment/Edit/" + comment.AssignmentId);
+                return Redirect("/Assignments/Show/" + comment.AssignmentId);
             }
 
             else
             {
-                
                 return View();
             }
         }
-        */
+        
     }
 }
